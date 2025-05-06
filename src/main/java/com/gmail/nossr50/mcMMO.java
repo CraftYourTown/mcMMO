@@ -161,6 +161,13 @@ public class mcMMO extends JavaPlugin {
 
             //Folia lib plugin instance
             foliaLib = new FoliaLib(this);
+            // CraftYourTown start - swap scheduler implementation to folia
+            com.tcoded.folialib.impl.FoliaImplementation setScheduler = new com.tcoded.folialib.impl.FoliaImplementation(foliaLib);
+            java.lang.reflect.Field FoliaLib$scheduler = FoliaLib.class.getDeclaredField("scheduler");
+            FoliaLib$scheduler.setAccessible(true);
+            FoliaLib$scheduler.set(foliaLib, setScheduler);
+            FoliaLib$scheduler.setAccessible(false);
+            // CraftYourTown End - swap scheduler implementation to folia
             InvalidTickDelayNotifier.disableNotifications = true;
 
             setupFilePaths();
